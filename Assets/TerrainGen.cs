@@ -9,7 +9,7 @@ public class TerrainGen : MonoBehaviour
 
     public float surfaceLevel = 0; //level that dictates where the suface is drawn relative to the surface, if noise value is less than surface, its inside else outisde
 
-    public float numChunks = 5;
+    public int numChunks = 5;
 
     int scale = 25; //The width / height / length of a chunk
 
