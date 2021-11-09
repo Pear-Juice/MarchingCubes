@@ -27,7 +27,7 @@ public class Lookup
     /// of the 12 edges of the cube.
     /// edgeConnection[12][2]
     /// </summary>
-    public int[,] EdgeConnection = new int[,] //makes up a cube with edges, bottom, top, then connect the two with lines
+    public int[,] edgeConnection = new int[,] //makes up a cube with edges, bottom, top, then connect the two with lines
     {
         {0,1}, {1,2}, {2,3}, {3,0},
         {4,5}, {5,6}, {6,7}, {7,4},
@@ -38,7 +38,7 @@ public class Lookup
     /// edgeDirection lists the direction vector (vertex1-vertex0) for each edge in the cube.
     /// edgeDirection[12][3]
     /// </summary>
-    public float[,] EdgeDirection = new float[,] //from selected edge connection, find the direction that the surface intercepts through so you can say where to put the vertice at, you may need to calculate offset depending on how blocky you want your mesh to look
+    public float[,] edgeDirection = new float[,] //from selected edge connection, find the direction that the surface intercepts through so you can say where to put the vertice at, you may need to calculate offset depending on how blocky you want your mesh to look
     {
         {1.0f, 0.0f, 0.0f},{0.0f, 1.0f, 0.0f},{-1.0f, 0.0f, 0.0f},{0.0f, -1.0f, 0.0f},
         {1.0f, 0.0f, 0.0f},{0.0f, 1.0f, 0.0f},{-1.0f, 0.0f, 0.0f},{0.0f, -1.0f, 0.0f},
@@ -51,7 +51,7 @@ public class Lookup
         {0, 0, 1},{1, 0, 1},{1, 1, 1},{0, 1, 1}
     };
 
-    public int[] CubeEdgeFlags = new int[]
+    public int[] cubeEdgeFlags = new int[]
     {
         0x000, 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c, 0x80c, 0x905, 0xa0f, 0xb06, 0xc0a, 0xd03, 0xe09, 0xf00,
         0x190, 0x099, 0x393, 0x29a, 0x596, 0x49f, 0x795, 0x69c, 0x99c, 0x895, 0xb9f, 0xa96, 0xd9a, 0xc93, 0xf99, 0xe90,

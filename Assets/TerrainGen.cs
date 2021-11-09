@@ -9,7 +9,7 @@ public class TerrainGen : MonoBehaviour
 
     public float surfaceLevel = 0; //level that dictates where the suface is drawn relative to the surface, if noise value is less than surface, its inside else outisde
 
-    public float numChunks = 5;
+    public int numChunks = 5;
 
     int scale = 25; //The width / height / length of a chunk
 
@@ -52,9 +52,8 @@ public class TerrainGen : MonoBehaviour
         meshRenderer.material = material;
         meshFilter.mesh = mesh;
 
-        lookup.setWindingOrder(surfaceLevel);
+        lookup.setWindingOrder(surfaceLevel); //to set the order unity draws triangles based on which vertices to draw from, a triangle drawn in backwards order faces the opposite direction
 
-        //to fix: make algorithm not only run on one cube, but offset, ossibly caused by triangles running off of the same vertices
         for (int x = xOffset; x < scale + xOffset; x++)
         {
             for (int y = yOffset; y < scale + yOffset; y++)
@@ -82,7 +81,7 @@ public class TerrainGen : MonoBehaviour
 
     void generateVerticesAndTriangles(int x, int y, int z, int surfaceCode)
     {
-        int edgeFlags = lookup.CubeEdgeFlags[surfaceCode]; //get list of edges intercepted or not
+        int edgeFlags = lookup.cubeEdgeFlags[surfaceCode]; //get list of edges intercepted or not
         int currentTrianglesToAdd;
         List<Vector3> currentVertices = new List<Vector3>();
 
@@ -96,9 +95,9 @@ public class TerrainGen : MonoBehaviour
             if ((edgeFlags & (1 << i)) != 0) //test if current edge is intercepted
             {
                 Vector3 vertice = new Vector3(
-                    x + lookup.vertexOffset[lookup.EdgeConnection[i, 0], 0] + 0.5f * lookup.EdgeDirection[i, 0], //generates where the surface intersects as a vertice and 
-                    y + lookup.vertexOffset[lookup.EdgeConnection[i, 0], 1] + 0.5f * lookup.EdgeDirection[i, 1],
-                    z + lookup.vertexOffset[lookup.EdgeConnection[i, 0], 2] + 0.5f * lookup.EdgeDirection[i, 2]
+                    x + lookup.vertexOffset[lookup.edgeConnection[i, 0], 0] + 0.5f * lookup.edgeDirection[i, 0], //generates where the surface intersects as a vertice and 
+                    y + lookup.vertexOffset[lookup.edgeConnection[i, 0], 1] + 0.5f * lookup.edgeDirection[i, 1],
+                    z + lookup.vertexOffset[lookup.edgeConnection[i, 0], 2] + 0.5f * lookup.edgeDirection[i, 2]
                     );
 
                 currentVertices.Add(vertice);
@@ -159,18 +158,6 @@ public class TerrainGen : MonoBehaviour
         }
 
         return cube;
-    }
-
-    public static float PerlinNoise3D(float x, float y, float z)
-    {
-        float xy = Mathf.PerlinNoise(x, y);
-        float xz = Mathf.PerlinNoise(x, z);
-        float yz = Mathf.PerlinNoise(y, z);
-        float yx = Mathf.PerlinNoise(y, x);
-        float zx = Mathf.PerlinNoise(z, x);
-        float zy = Mathf.PerlinNoise(z, y);
-
-        return (xy + xz + yz + yx + zx + zy) / 6;
     }
 }
 
